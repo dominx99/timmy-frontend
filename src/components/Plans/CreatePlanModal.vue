@@ -1,68 +1,66 @@
 <template>
   <transition v-if="showModal" name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-top">
-            <div class="modal-header">Create Plan</div>
-            <d-svg @click.native="closeModal()" class="close-icon" icon="cancel"/>
+      <div class="modal-container">
+        <div class="modal-top">
+          <div class="modal-header">Create Plan</div>
+          <d-svg @click.native="closeModal()" class="close-icon" icon="cancel"/>
+        </div>
+        <div class="modal-body w-full mt-12">
+          <div class="mb-5">
+            <select
+              class="form-input"
+              v-model="form.timeMeterId"
+            >
+              <option
+                  v-for="timeMeter in timeMeters"
+                  v-bind:key="timeMeter.id"
+                  :value="timeMeter.id"
+                  v-text="timeMeter.name"
+              ></option>
+            </select>
           </div>
-          <div class="modal-body w-full mt-12">
-            <div class="mb-5">
-              <select
-                class="form-input"
-                v-model="form.timeMeterId"
-              >
-                <option
-                    v-for="timeMeter in timeMeters"
-                    v-bind:key="timeMeter.id"
-                    :value="timeMeter.id"
-                    v-text="timeMeter.name"
-                ></option>
-              </select>
-            </div>
 
-            <div class="mb-5">
-              <select
-                class="form-input"
-                v-model="form.period"
-              >
-                <option
-                    v-for="(period, index) in periods"
-                    v-bind:key="index"
-                    :value="period.value"
-                    v-text="period.name"
-                ></option>
-              </select>
-            </div>
+          <div class="mb-5">
+            <select
+              class="form-input"
+              v-model="form.period"
+            >
+              <option
+                  v-for="(period, index) in periods"
+                  v-bind:key="index"
+                  :value="period.value"
+                  v-text="period.name"
+              ></option>
+            </select>
+          </div>
 
-            <div class="flex flex-row flex-wrap">
-              <div class="w-1/2 pr-3 mb-6">
-                <input
-                  class="form-input"
-                  type="number"
-                  v-model.number="form.minTime"
-                  step="15"
-                  placeholder="Min time (mins)"
-                />
-              </div>
-              <div class="w-1/2 pl-3">
-                <input
-                  class="form-input"
-                  type="number"
-                  v-model.number="form.maxTime"
-                  step="15"
-                  placeholder="Max time (mins)"
-                />
-              </div>
+          <div class="flex flex-row flex-wrap">
+            <div class="w-1/2 pr-3 mb-6">
+              <input
+                class="form-input"
+                type="number"
+                v-model.number="form.minTime"
+                step="15"
+                placeholder="Min time (mins)"
+              />
+            </div>
+            <div class="w-1/2 pl-3">
+              <input
+                class="form-input"
+                type="number"
+                v-model.number="form.maxTime"
+                step="15"
+                placeholder="Max time (mins)"
+              />
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              class="btn bg-blue-500 rounded ml-auto"
-              type="button"
-            >Save</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn bg-blue-500 rounded ml-auto"
+            type="button"
+          >Save</button>
         </div>
       </div>
     </div>
