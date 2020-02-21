@@ -107,6 +107,15 @@ export default {
     closeModal () {
       this.showModal = false
     },
+    clearModal() {
+      this.form = {
+        minTime: "",
+        maxTime: "",
+        timeMeterId: ""
+      }
+
+      this.form.period = this.periods[0].value
+    },
     save() {
       let params = this.form
 
@@ -116,6 +125,7 @@ export default {
       this.$store.dispatch("plans/add", params)
 
       this.closeModal()
+      this.clearModal()
     },
     preparePeriods() {
       let formats = {
