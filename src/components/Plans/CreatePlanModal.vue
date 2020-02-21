@@ -8,21 +8,21 @@
         </div>
         <div class="modal-body w-full mt-12">
           <div class="mb-5">
-            <select
-              class="form-input"
+            <Label id="timeMeters" value="Time meter" />
+            <v-select
+              id="timeMeters"
+              class="style-chooser"
+              label="name"
+              :options="timeMeters"
               v-model="form.timeMeterId"
-            >
-              <option
-                  v-for="timeMeter in timeMeters"
-                  v-bind:key="timeMeter.id"
-                  :value="timeMeter.id"
-                  v-text="timeMeter.name"
-              ></option>
-            </select>
+              :reduce="timeMeter => timeMeter.id"
+            />
           </div>
 
           <div class="mb-5">
+            <Label id="period" value="Period" />
             <select
+              id="period"
               class="form-input"
               v-model="form.period"
             >
@@ -37,27 +37,28 @@
 
           <div class="flex flex-row flex-wrap">
             <div class="w-1/2 pr-3 mb-6">
-              <input
-                class="form-input"
-                type="number"
-                v-model.number="form.minTime"
-                step="15"
-                placeholder="Min time (mins)"
+              <Label id="minTime" value="Min time (in mins)" />
+              <NumberInput
+                id="minTime"
+                v-model="form.minTime"
+                :step="15"
+                placeholder="15"
               />
             </div>
             <div class="w-1/2 pl-3">
-              <input
-                class="form-input"
-                type="number"
-                v-model.number="form.maxTime"
+              <Label id="maxTime" value="Max time (in mins)" />
+              <NumberInput
+                id="maxTime"
+                v-model="form.maxTime"
                 step="15"
-                placeholder="Max time (mins)"
+                placeholder="30"
               />
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button
+            @click="save"
             class="btn bg-blue-500 rounded ml-auto"
             type="button"
           >Save</button>
@@ -69,10 +70,14 @@
 
 <script>
 import DSvg from './../DSvg'
+import NumberInput from './../Forms/NumberInput'
+import Label from './../Forms/Label'
 
 export default {
   components: {
-    DSvg
+    DSvg,
+    NumberInput,
+    Label
   },
   computed: {
     timeMeters() {
@@ -85,7 +90,8 @@ export default {
       form: {
         period: {},
         minTime: "",
-        maxTime: ""
+        maxTime: "",
+        timeMeterId: ""
       },
       periods: [],
     }
@@ -100,6 +106,16 @@ export default {
     },
     closeModal () {
       this.showModal = false
+    },
+    save() {
+      let params = this.form
+
+      params.startDate = params.period.startDate
+      params.endDate = params.period.endDate
+
+      this.$store.dispatch("plans/add", params)
+
+      this.closeModal()
     },
     preparePeriods() {
       let formats = {

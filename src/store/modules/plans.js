@@ -11,31 +11,17 @@ export default {
         commit("setPlans", res.data.data)
       } catch (e) {
         console.error(e)
-
-        commit('setPlans', [
-          {
-            timeMeter: {
-              name: "Work"
-            }
-          },
-          {
-            timeMeter: {
-              name: "Learning"
-            }
-          },
-          {
-            timeMeter: {
-              name: "Dirty dishes"
-            }
-          },
-          {
-            timeMeter: {
-              name: "Lightning"
-            }
-          }
-        ])
       }
     },
+    add(_, params) {
+      console.log("params", params)
+
+      try {
+        window.axios.post('v1/plans', params)
+      } catch (e) {
+        console.error(e)
+      }
+    }
   },
   mutations: {
     setPlans (state, plans) {

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import Pusher from 'pusher-js'
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
 import '@/assets/scss/tailwind.scss'
 const moment = require('moment')
 
@@ -11,6 +13,9 @@ Vue.use(require('vue-moment'), {
   moment
 })
 require("moment/locale/pl")
+
+
+Vue.component('v-select', vSelect)
 
 Vue.prototype.$bus = new Vue()
 
