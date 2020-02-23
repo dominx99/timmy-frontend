@@ -4,11 +4,17 @@ export default {
     plans: [],
   },
   actions: {
-    async loadByDay({ commit }, day) {
+    async loadByDate({ commit }, date) {
       try {
-        let res = await window.axios.get('v1/plans/by/day', { date: day })
+        let res = await window.axios({
+          url: 'v1/plans/by/date',
+          params: {
+            date: date
+          }
+        })
 
         commit("setPlans", res.data.data)
+        console.log(res.data.data)
       } catch (e) {
         console.error(e)
       }

@@ -32,7 +32,7 @@ export default {
       sameDay: "[Today]",
       nextDay: "[Tommorow]"
     })
-    this.$store.dispatch("plans/loadByDay", this.$moment().format("YYYY-MM-DD"))
+    this.$store.dispatch("plans/loadByDate", this.$moment().format("YYYY-MM-DD HH:mm:ss"))
   },
 }
 </script>
