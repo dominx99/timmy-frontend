@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export default {
   namespaced: true,
   state: {
@@ -14,18 +16,20 @@ export default {
         })
 
         commit("setPlans", res.data.data)
-        console.log(res.data.data)
       } catch (e) {
         console.error(e)
       }
     },
-    add(_, params) {
-      console.log("params", params)
-
+    async add({ dispatch }, params) {
       try {
-        window.axios.post('v1/plans', params)
+        await window.axios.post('v1/plans', params)
+
+        dispatch("loadByDate", moment().format("YYYY-MM-DD HH:mm:ss"))
+        dispatch("toasts/success", "Successfuly created plan.", { root: true })
       } catch (e) {
         console.error(e)
+
+        dispatch("toasts/error", e, { root: true })
       }
     }
   },

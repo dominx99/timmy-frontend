@@ -3,19 +3,18 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import Pusher from 'pusher-js'
 import vSelect from 'vue-select'
+import Dsvg from './components/DSvg'
 import 'vue-select/dist/vue-select.css';
 import '@/assets/scss/tailwind.scss'
 const moment = require('moment')
 
 Vue.use(VueRouter)
-
 Vue.use(require('vue-moment'), {
   moment
 })
-require("moment/locale/pl")
-
 
 Vue.component('v-select', vSelect)
+Vue.component('d-svg', Dsvg)
 
 Vue.prototype.$bus = new Vue()
 

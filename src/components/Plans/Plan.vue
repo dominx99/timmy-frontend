@@ -9,7 +9,8 @@
     </div>
     <div class="w-full p-5">
       <div v-text="plan.timeMeter.name"></div>
-      <div class="text-sm text-gray-200">00:00:00</div>
+      <div class="text-sm text-gray-200" v-text="time(plan.minTime)"></div>
+      <div class="text-sm text-gray-200" v-text="ends()"></div>
     </div>
   </div>
 </template>
@@ -21,6 +22,17 @@ export default {
   props: ["plan"],
   components: {
     "d-svg": DSvg,
+  },
+  methods: {
+    ends() {
+      return "Ends " + this.$moment(this.plan.endDate).format("DD/MM/YY")
+    },
+    time(time) {
+      return this.$moment()
+        .startOf("day")
+        .seconds(time)
+        .format("HH:mm:ss")
+    }
   }
 }
 </script>

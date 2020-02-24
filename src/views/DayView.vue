@@ -1,5 +1,6 @@
 <template>
   <div class="min-h-screen bg-gradient-purple-blue text-white">
+    <Toasts/>
     <CreatePlanModal/>
     <Navigation :title="date"/>
     <div class="container ml-auto mr-auto">
@@ -10,6 +11,7 @@
 </template>
 
 <script>
+import Toasts from './../components/Toasts/Toasts'
 import Navigation from './../components/Navigation'
 import PlansList from './../components/Plans/PlansList'
 import PlansFloatingButton from './../components/Plans/PlansFloatingButton'
@@ -20,7 +22,8 @@ export default {
     Navigation,
     PlansList,
     PlansFloatingButton,
-    CreatePlanModal
+    CreatePlanModal,
+    Toasts
   },
   data () {
     return {
