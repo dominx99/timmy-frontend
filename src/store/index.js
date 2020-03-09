@@ -5,6 +5,7 @@ import user from './modules/user'
 import timeMeters from './modules/time-meters'
 import plans from './modules/plans'
 import toasts from './modules/toasts'
+import measurements from './modules/measurements'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     user,
     timeMeters,
     plans,
-    toasts
+    toasts,
+    measurements
   }
 })
 

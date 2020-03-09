@@ -31,7 +31,7 @@ export default {
 
         dispatch("toasts/error", e, { root: true })
       }
-    }
+    },
   },
   mutations: {
     setPlans (state, plans) {

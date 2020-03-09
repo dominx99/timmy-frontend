@@ -2,9 +2,23 @@
   <div class="card">
     <div class="ml-8 mr-3 flex items-center justify-center">
       <button
+        @click="toggle()"
         class="flex justify-center items-center shadow-md"
-        style="width: 50px; height: 50px; border-radius: 100%;">
-        <d-svg style="width: 30%" icon="play" class="fill-current text-white"/>
+        style="width: 50px; height: 50px; border-radius: 100%;"
+      >
+        <d-svg
+          v-show="played === true"
+          style="width: 30%"
+          icon="pause"
+          class="fill-current text-white"
+        />
+        <d-svg
+          v-show="played === false"
+          style="width: 30%"
+          icon="play"
+          class="fill-current text-white"
+        >
+        </d-svg>
       </button>
     </div>
     <div class="w-full p-5">
@@ -17,13 +31,28 @@
 
 <script>
 import DSvg from './../DSvg'
+import Vue from 'vue'
 
 export default {
   props: ["plan"],
   components: {
     "d-svg": DSvg,
   },
+  data() {
+    return {
+      played: false,
+    }
+  },
   methods: {
+    toggle() {
+      if (this.played) {
+        this.$store.dispatch("measurements/stop", this.plan.id)
+      } else {
+        this.$store.dispatch("measurements/start", this.plan.id)
+      }
+
+      Vue.set(this, "played", ! this.played)
+    },
     ends() {
       return "Ends " + this.$moment(this.plan.endDate).format("DD/MM/YY")
     },
