@@ -23,7 +23,8 @@
     </div>
     <div class="w-full p-5">
       <div v-text="plan.timeMeter.name"></div>
-      <div class="text-sm text-gray-200" v-text="time(plan.minTime)"></div>
+      <div class="text-sm text-gray-200" v-text="passedTime"></div>
+      <div class="text-sm text-gray-200" v-text="period()"></div>
       <div class="text-sm text-gray-200" v-text="ends()"></div>
     </div>
   </div>
@@ -41,14 +42,70 @@ export default {
   data() {
     return {
       played: false,
+      passedTime: "00:00:00",
+      passedTimeInterval: null
+    }
+  },
+  computed: {
+    now() {
+      return this.$store.state.time.now
+    },
+  },
+  mounted() {
+    this.setPlayed()
+    this.updatePassedTime()
+    if (this.played) {
+      this.scheduleUpdatePassedTime()
     }
   },
   methods: {
-    toggle() {
+    updatePassedTime() {
+      this.passedTime = this.time(this.calculateMeasurements())
+    },
+    scheduleUpdatePassedTime() {
+      this.passedTimeInterval = setInterval(this.updatePassedTime, 1000)
+    },
+    stopUpdatePassedTime() {
+      clearInterval(this.passedTimeInterval)
+    },
+    calculateMeasurements() {
+      let seconds = 0
+
+      this.plan.measurements.forEach(measurement => {
+        seconds += this.calculateDiff(measurement.stopped_at, measurement.created_at)
+      })
+
+      return seconds
+    },
+    calculateDiff(stoppedAt, createdAt) {
+      if (stoppedAt === null) {
+        stoppedAt = this.now
+      }
+
+      return this.$moment(stoppedAt).diff(createdAt, "seconds")
+    },
+    period() {
+      return "From " + this.time(this.plan.minTime) + " to " + this.time(this.plan.maxTime)
+    },
+    setPlayed() {
+      this.played = this.plan.measurements.some(m => m.status === "started")
+    },
+    async stop() {
+      await this.$store.dispatch("measurements/stop", this.plan.id)
+      await this.$store.dispatch("plans/fetchMeasurements", this.plan.id)
+      this.updatePassedTime()
+      this.stopUpdatePassedTime()
+    },
+    async start() {
+      await this.$store.dispatch("measurements/start", this.plan.id)
+      await this.$store.dispatch("plans/fetchMeasurements", this.plan.id)
+      this.scheduleUpdatePassedTime()
+    },
+    async toggle() {
       if (this.played) {
-        this.$store.dispatch("measurements/stop", this.plan.id)
+        this.stop()
       } else {
-        this.$store.dispatch("measurements/start", this.plan.id)
+        this.start()
       }
 
       Vue.set(this, "played", ! this.played)

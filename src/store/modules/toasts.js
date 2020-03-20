@@ -44,8 +44,6 @@ export default {
   mutations: {
     addToast(state, toast) {
       state.toasts.unshift(toast)
-
-      console.log(toast)
     },
     removeExpired(state) {
       state.toasts = state.toasts.filter(toast => {

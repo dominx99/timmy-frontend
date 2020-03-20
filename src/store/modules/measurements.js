@@ -1,11 +1,11 @@
 export default {
   namespaced: true,
   actions: {
-    start(_, planId) {
-      window.axios.post(`v1/measurements/${planId}/start`)
+    async start(_, planId) {
+      await window.axios.post(`v1/measurements/${planId}/start`)
     },
-    stop(_, planId) {
-      window.axios.post(`v1/measurements/${planId}/stop`)
+    async stop(_, planId) {
+      await window.axios.post(`v1/measurements/${planId}/stop`)
     }
   }
 }

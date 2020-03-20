@@ -32,10 +32,31 @@ export default {
         dispatch("toasts/error", e, { root: true })
       }
     },
+    async fetchMeasurements({ dispatch, commit }, planId) {
+      try {
+        let measurementsRes = await window.axios.get(`v1/plans/${planId}/measurements`)
+        let measurements = measurementsRes.data.data
+
+        commit("setMeasurements", { planId, measurements })
+      } catch (e) {
+        console.error(e)
+
+        dispatch("toasts/error", e, { root: true })
+      }
+    }
   },
   mutations: {
     setPlans (state, plans) {
       state.plans = plans
     },
+    setMeasurements(state, { planId, measurements }) {
+      let plan = state.plans.find(plan => plan.id === planId)
+
+      if (! plan) {
+        return
+      }
+
+      plan.measurements = measurements
+    }
   }
 }

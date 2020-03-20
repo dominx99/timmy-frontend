@@ -31,6 +31,9 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch("time/fetch")
+    setInterval(() => this.$store.commit("time/addSecond"), 1000)
+
     this.date = this.$moment().calendar(null, {
       sameDay: "[Today]",
       nextDay: "[Tommorow]"
