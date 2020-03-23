@@ -1,11 +1,27 @@
 export default {
   namespaced: true,
   actions: {
-    async start(_, planId) {
-      await window.axios.post(`v1/measurements/${planId}/start`)
+    async start({ dispatch }, planId) {
+      try {
+        await window.axios.post(`v1/measurements/${planId}/start`)
+      } catch(e) {
+        dispatch("toasts/error", e, { root: true })
+
+        return false
+      }
+
+      return true
     },
-    async stop(_, planId) {
-      await window.axios.post(`v1/measurements/${planId}/stop`)
+    async stop({ dispatch }, planId) {
+      try {
+        await window.axios.post(`v1/measurements/${planId}/stop`)
+      } catch(e) {
+        dispatch("toasts/error", e, { root: true })
+
+        return false
+      }
+
+      return true
     }
   }
 }

@@ -102,23 +102,38 @@ export default {
       this.played = this.plan.measurements.some(m => m.status === "started")
     },
     async stop() {
-      await this.$store.dispatch("measurements/stop", this.plan.id)
+      let result = await this.$store.dispatch("measurements/stop", this.plan.id)
+
+      if (! result) {
+        return
+      }
+
       await this.$store.dispatch("plans/fetchMeasurements", this.plan.id)
+
       this.updatePassedTime()
       this.stopUpdatePassedTime()
+      this.toggleIcon()
     },
     async start() {
-      await this.$store.dispatch("measurements/start", this.plan.id)
+      let result = await this.$store.dispatch("measurements/start", this.plan.id)
+
+      if (! result) {
+        return
+      }
+
       await this.$store.dispatch("plans/fetchMeasurements", this.plan.id)
+
       this.scheduleUpdatePassedTime()
+      this.toggleIcon()
     },
-    async toggle() {
+    toggle() {
       if (this.played) {
         this.stop()
       } else {
         this.start()
       }
-
+    },
+    toggleIcon() {
       Vue.set(this, "played", ! this.played)
     },
     duration() {

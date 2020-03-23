@@ -5,9 +5,9 @@
         <Dsvg class="white fill-current" style="width: 30px;" icon="left-arrow" />
       </button>
       <div class="text-2xl" v-text="title"></div>
-      <button @click="setStepToDays()">Day</button>
-      <button @click="setStepToWeeks()">Week</button>
-      <button @click="setStepToMonths()">Month</button>
+      <button @click="setStep('day')">Day</button>
+      <button @click="setStep('week')">Week</button>
+      <button @click="setStep('month')">Month</button>
       <button @click="next()">
         <Dsvg class="white fill-current" style="width: 30px;" icon="right-arrow" />
       </button>
@@ -39,18 +39,11 @@ export default {
       this.$store.commit("plans/clear")
       this.$store.dispatch("plans/loadByPeriod", this.period)
     },
-    setStepToDays() {
-      this.$store.dispatch("view/setActivePeriod", "day")
-      this.$store.commit("view/setActiveStep", "days")
+    setStep(step) {
+      this.$store.dispatch("view/setActivePeriod", step)
+      this.$store.commit("view/setActiveStep", `${step}s`)
+      this.$store.dispatch("plans/loadByPeriod", this.period)
     },
-    setStepToWeeks() {
-      this.$store.dispatch("view/setActivePeriod", "week")
-      this.$store.commit("view/setActiveStep", "weeks")
-    },
-    setStepToMonths() {
-      this.$store.dispatch("view/setActivePeriod", "month")
-      this.$store.commit("view/setActiveStep", "months")
-    }
   }
 }
 </script>

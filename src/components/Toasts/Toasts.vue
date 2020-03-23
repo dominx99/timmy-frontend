@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed flex flex-col mr-5 mt-5"
+    class="fixed flex flex-col mr-5 mt-5 z-30"
     :class="positionClass"
   >
     <Toast
