@@ -82,6 +82,6 @@ export default {
 
 <style scoped>
 .rotated {
-  transform: rotate(45deg);
+  transform: rotate(135deg);
 }
 </style>

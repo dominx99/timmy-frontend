@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div :class="cardClass()">
     <div class="ml-8 mr-3 flex items-center justify-center">
       <button
         @click="toggle()"
@@ -25,7 +25,7 @@
       <div v-text="plan.timeMeter.name"></div>
       <div class="text-sm text-gray-200" v-text="passedTime"></div>
       <div class="text-sm text-gray-200" v-text="period()"></div>
-      <div class="text-sm text-gray-200" v-text="ends()"></div>
+      <div class="text-sm text-gray-200" v-text="duration()"></div>
     </div>
   </div>
 </template>
@@ -43,7 +43,8 @@ export default {
     return {
       played: false,
       passedTime: "00:00:00",
-      passedTimeInterval: null
+      passedTimeInterval: null,
+      disabled: false
     }
   },
   computed: {
@@ -52,6 +53,7 @@ export default {
     },
   },
   mounted() {
+    this.setDisabled()
     this.setPlayed()
     this.updatePassedTime()
     if (this.played) {
@@ -59,6 +61,15 @@ export default {
     }
   },
   methods: {
+    setDisabled() {
+      this.disabled = this.$moment(this.now).isAfter(this.plan.endDate)
+    },
+    cardClass() {
+      return {
+        "card": true,
+        "card-archived": this.disabled,
+      }
+    },
     updatePassedTime() {
       this.passedTime = this.time(this.calculateMeasurements())
     },
@@ -110,8 +121,11 @@ export default {
 
       Vue.set(this, "played", ! this.played)
     },
-    ends() {
-      return "Ends " + this.$moment(this.plan.endDate).format("DD/MM/YY")
+    duration() {
+      let starts = "Starts at " + this.$moment(this.plan.startDate).format("DD/MM/YY")
+      let ends = "Ends " + this.$moment(this.plan.endDate).format("DD/MM/YY")
+
+      return starts + " " + ends
     },
     time(time) {
       return this.$moment()
@@ -126,6 +140,10 @@ export default {
 <style lang="scss">
 .card {
   @apply flex flex-row bg-blue-600 mb-5 rounded shadow-xl mx-5;
+
+  &.card-archived {
+    @apply opacity-50;
+  }
 
   @screen md {
     @apply mb-10;

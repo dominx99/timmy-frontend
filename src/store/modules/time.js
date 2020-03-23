@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     now: "1970-01-01 00:00:00",
+    activeDate: "1970-01-01 00:00:00"
   },
   actions: {
     async fetch({ commit }) {
@@ -22,6 +23,9 @@ export default {
     },
     addSecond(state) {
       state.now = moment(state.now).add(1, "seconds").format("YYYY-MM-DD HH:mm:ss")
+    },
+    setActiveDate(state, date) {
+      state.activeDate = date
     }
   }
 }

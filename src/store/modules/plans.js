@@ -1,4 +1,5 @@
 import moment from 'moment'
+import Vue from 'vue'
 
 export default {
   namespaced: true,
@@ -6,6 +7,21 @@ export default {
     plans: [],
   },
   actions: {
+    async loadByPeriod({ commit }, { startDate, endDate }) {
+      try {
+        let res = await window.axios({
+          url: 'v1/plans/by/period',
+          params: {
+            startDate,
+            endDate,
+          }
+        })
+
+        commit("setPlans", res.data.data)
+      } catch (e) {
+        console.error(e)
+      }
+    },
     async loadByDate({ commit }, date) {
       try {
         let res = await window.axios({
@@ -46,8 +62,11 @@ export default {
     }
   },
   mutations: {
-    setPlans (state, plans) {
-      state.plans = plans
+    setPlans(state, plans) {
+      Vue.set(state, "plans", [...plans])
+    },
+    clear(state) {
+      Vue.set(state, "plans", [])
     },
     setMeasurements(state, { planId, measurements }) {
       let plan = state.plans.find(plan => plan.id === planId)

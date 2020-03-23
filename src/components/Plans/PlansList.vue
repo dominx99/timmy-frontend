@@ -16,9 +16,5 @@ export default {
       return this.$store.state.plans.plans
     }
   },
-  data() {
-    return {
-    }
-  },
 }
 </script>

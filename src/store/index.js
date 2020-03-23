@@ -7,6 +7,7 @@ import plans from './modules/plans'
 import toasts from './modules/toasts'
 import measurements from './modules/measurements'
 import time from './modules/time'
+import view from './modules/view'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ const store = new Vuex.Store({
     plans,
     toasts,
     measurements,
-    time
+    time,
+    view
   }
 })
 
