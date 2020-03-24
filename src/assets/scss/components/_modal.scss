@@ -17,7 +17,6 @@
 
     @screen lg {
       @apply h-auto;
-      min-height: 500px;
       max-height: calc(theme("height.screen") - theme("margin.20"))
     }
 

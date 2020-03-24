@@ -34,6 +34,7 @@
       <div
         class="bg-blue-500 rounded px-5 py-2 shadow-md open-modal-button"
         style="width: fit-content;"
+        @click="$bus.$emit('openCreateTimeMeterModal')"
       >
         Time meter
       </div>
