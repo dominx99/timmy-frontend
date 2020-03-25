@@ -42,6 +42,7 @@ export default {
     },
   },
   mounted() {
+    console.log("env", process.env)
     this.configureServerTime()
     this.configureActivePeriod()
     this.configureActiveStep()

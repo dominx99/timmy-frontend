@@ -34,7 +34,8 @@ window.axios = axios.create({
   }],
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  baseURL: process.env.API_URL
 })
 Vue.prototype.$axios = window.axios
 
