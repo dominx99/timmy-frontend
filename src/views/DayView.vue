@@ -5,7 +5,8 @@
     <CreateTimeMeterModal/>
     <Navigation :title="title"/>
     <div class="container ml-auto mr-auto">
-      <PlansList/>
+      <PlansList v-if="! emptyPlans()"/>
+      <PlansNotFound v-else/>
     </div>
     <PlansFloatingButton />
   </div>
@@ -16,6 +17,7 @@ import Toasts from './../components/Toasts/Toasts'
 import Navigation from './../components/Navigation'
 import PlansList from './../components/Plans/PlansList'
 import PlansFloatingButton from './../components/Plans/PlansFloatingButton'
+import PlansNotFound from './../components/Plans/PlansNotFound'
 import CreatePlanModal from './../components/Plans/CreatePlanModal'
 import CreateTimeMeterModal from './../components/TimeMeters/CreateTimeMeterModal'
 import { mapGetters } from 'vuex'
@@ -25,6 +27,7 @@ export default {
     Navigation,
     PlansList,
     PlansFloatingButton,
+    PlansNotFound,
     CreatePlanModal,
     CreateTimeMeterModal,
     Toasts
@@ -46,6 +49,9 @@ export default {
     this.$store.dispatch("plans/loadByPeriod", this.period)
   },
   methods: {
+    emptyPlans() {
+      return this.$store.state.plans.plans <= 0
+    },
     sameDay(startDate, endDate) {
       return this.$moment(startDate).isSame((this.$moment(endDate)).format("YYYY-MM-DD HH:mm:ss"), "day")
     },
