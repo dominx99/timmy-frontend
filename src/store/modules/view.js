@@ -59,7 +59,7 @@ export default {
         })
       }
 
-      return moment(state.activePeriod.startDate).format("YYYY-MM-DD") + " - " +
+      return moment(state.activePeriod.startDate).format("YYYY-MM-DD") + "<br/>" +
         moment(state.activePeriod.endDate).format("YYYY-MM-DD")
     },
   }

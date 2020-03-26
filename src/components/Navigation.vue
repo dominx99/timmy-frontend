@@ -4,7 +4,7 @@
       <button @click="previous()">
         <Dsvg class="white fill-current" style="width: 30px;" icon="left-arrow" />
       </button>
-      <div class="text-2xl" v-text="title"></div>
+      <div :class="titleClass()" v-html="title"></div>
       <button @click="setStep('day')">Day</button>
       <button @click="setStep('week')">Week</button>
       <button @click="setStep('month')">Month</button>
@@ -29,6 +29,11 @@ export default {
     }
   },
   methods: {
+    titleClass() {
+      return {
+        "text-2xl": this.title.length <= 10,
+      }
+    },
     previous() {
       this.$store.dispatch("view/previous")
       this.$store.commit("plans/clear")
