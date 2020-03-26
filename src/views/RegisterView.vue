@@ -46,7 +46,7 @@ export default {
           password: this.auth.password
         })
 
-        localStorage.setItem('access_token', res.data.data.token)
+        localStorage.setItem('access_token', res.data.data.access_token)
         this.$router.push({ name: 'day' })
       } catch (error) {
         console.error(error.response)
