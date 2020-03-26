@@ -26,7 +26,7 @@
         Plan
       </div>
       <div
-        class="bg-blue-500 rounded px-5 py-2 mb-3 shadow-md open-modal-button"
+        class="bg-blue-500 rounded px-5 py-2 mb-3 shadow-md open-modal-button hidden"
         style="width: fit-content;"
       >
         Task

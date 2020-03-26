@@ -9,6 +9,9 @@ export default {
         await window.axios.post("v1/time-meters", {
           name: name
         })
+
+        dispatch("get")
+        dispatch("toasts/success", "Successfuly created time meter.", { root: true })
       } catch (e) {
         dispatch("toasts/error", e, { root: true })
       }
