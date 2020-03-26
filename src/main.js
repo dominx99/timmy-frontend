@@ -8,6 +8,18 @@ import 'vue-select/dist/vue-select.css';
 import '@/assets/scss/tailwind.scss'
 const moment = require('moment')
 
+let forceHttps = () => {
+  if (window.location.protocol !== 'https:') {
+    window.location.replace(`https:${window.location.href.substring(window.location.protocol.length)}`);
+  }
+}
+
+console.log("env", process.env)
+
+if (process.env.NODE_ENV === "production") {
+  forceHttps()
+}
+
 Vue.use(VueRouter)
 Vue.use(require('vue-moment'), {
   moment
@@ -27,7 +39,7 @@ window.socket = new Pusher('ed5340121001ba23bad9', {
 });
 
 let axios = require('axios')
-window.axios = axios.create({
+let axiosConfig = {
   transformRequest: [function (data, headers) {
     headers['Authorization'] = 'Bearer ' + localStorage.getItem('access_token')
     return JSON.stringify(data)
@@ -35,8 +47,11 @@ window.axios = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  baseURL: process.env.VUE_APP_API_URL
-})
+}
+if (typeof process.env.VUE_APP_API_URL !== "undefined") {
+  axiosConfig.baseURL = process.env.VUE_APP_API_URL
+}
+window.axios = axios.create(axiosConfig)
 Vue.prototype.$axios = window.axios
 
 Vue.config.productionTip = false
