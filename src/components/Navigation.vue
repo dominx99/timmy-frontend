@@ -47,6 +47,7 @@ export default {
     setStep(step) {
       this.$store.dispatch("view/setActivePeriod", step)
       this.$store.commit("view/setActiveStep", `${step}s`)
+      this.$store.commit("plans/clear")
       this.$store.dispatch("plans/loadByPeriod", this.period)
     },
   }
