@@ -3,6 +3,7 @@
     <Toasts/>
     <CreatePlanModal/>
     <CreateTimeMeterModal/>
+    <DeletePlanModal/>
     <Navigation :title="title"/>
     <div class="container ml-auto mr-auto">
       <PlansList v-if="! emptyPlans()"/>
@@ -19,6 +20,7 @@ import PlansList from './../components/Plans/PlansList'
 import PlansFloatingButton from './../components/Plans/PlansFloatingButton'
 import PlansNotFound from './../components/Plans/PlansNotFound'
 import CreatePlanModal from './../components/Plans/CreatePlanModal'
+import DeletePlanModal from './../components/Plans/DeletePlanModal'
 import CreateTimeMeterModal from './../components/TimeMeters/CreateTimeMeterModal'
 import { mapGetters } from 'vuex'
 
@@ -29,6 +31,7 @@ export default {
     PlansFloatingButton,
     PlansNotFound,
     CreatePlanModal,
+    DeletePlanModal,
     CreateTimeMeterModal,
     Toasts
   },

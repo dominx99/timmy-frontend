@@ -2,6 +2,6 @@
   @apply font-bold uppercase py-3 px-6 cursor-pointer outline-none border-none shadow-md;
 
   &:focus, &:active {
-    @apply outline-none;
+    @apply outline-none shadow-inner;
   }
 }

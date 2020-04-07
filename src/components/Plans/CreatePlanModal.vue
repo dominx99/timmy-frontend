@@ -1,7 +1,7 @@
 <template>
   <transition v-if="showModal" name="modal">
     <div class="modal-mask">
-      <div class="modal-container">
+      <div class="modal-container modal-fullscreen">
         <div class="modal-top">
           <div class="modal-header">Create Plan</div>
           <d-svg @click.native="closeModal()" class="close-icon" icon="cancel"/>

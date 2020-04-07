@@ -1,24 +1,24 @@
 <template>
-  <div :class="cardClass()">
+  <div :class="cardClass()" class="relative">
     <div class="ml-8 mr-3 flex items-center justify-center">
       <button
         @click="toggle()"
-        class="flex justify-center items-center shadow-md"
+        class="flex justify-center items-center shadow-md focus:outline-none"
+        :class="activePlayButtonClass()"
         style="width: 50px; height: 50px; border-radius: 100%;"
       >
-        <d-svg
+        <DSvg
           v-show="played === true"
           style="width: 30%"
           icon="pause"
           class="fill-current text-white"
         />
-        <d-svg
+        <DSvg
           v-show="played === false"
           style="width: 30%"
           icon="play"
           class="fill-current text-white"
-        >
-        </d-svg>
+        />
       </button>
     </div>
     <div class="w-full p-5">
@@ -27,17 +27,32 @@
       <div class="text-sm text-gray-200" v-text="period()"></div>
       <div class="text-sm text-gray-200" v-text="duration()"></div>
     </div>
+    <div class="absolute right-0 mr-1 mt-1 flex justify-end flex-row">
+      <!-- <IconButton icon="pen"/> -->
+      <IconButton @click.native='$bus.$emit("openDeletePlanModal", plan)' icon="trash"/>
+      <!-- <Dropdown icon="three-dots-v"> -->
+      <!--   <DropdownItem @click.native='$bus.$emit("openDeletePlanModal", plan)'>Delete</DropdownItem> -->
+      <!--   <DropdownItem>Share</DropdownItem> -->
+      <!--   <DropdownItem>Star</DropdownItem> -->
+      <!-- </Dropdown> -->
+    </div>
   </div>
 </template>
 
 <script>
-import DSvg from './../DSvg'
 import Vue from 'vue'
+import DSvg from './../DSvg'
+// import Dropdown from './../Dropdown/Dropdown'
+// import DropdownItem from './../Dropdown/DropdownItem'
+import IconButton from './../Buttons/IconButton'
 
 export default {
   props: ["plan"],
   components: {
-    "d-svg": DSvg,
+    DSvg,
+    // Dropdown,
+    // DropdownItem,
+    IconButton
   },
   data() {
     return {
@@ -61,6 +76,11 @@ export default {
     }
   },
   methods: {
+    activePlayButtonClass() {
+      return {
+        'shadow-inner': this.played
+      }
+    },
     setDisabled() {
       this.disabled = this.$moment(this.now).isAfter(this.plan.endDate)
     },

@@ -59,6 +59,17 @@ export default {
 
         dispatch("toasts/error", e, { root: true })
       }
+    },
+    async delete({ dispatch, commit }, planId) {
+      try {
+        await window.axios.delete(`v1/plans/${planId}`)
+
+        commit("removePlanById", planId)
+      } catch (e) {
+        console.error(e)
+
+        dispatch("toasts/error", e, { root: true })
+      }
     }
   },
   mutations: {
@@ -76,6 +87,11 @@ export default {
       }
 
       plan.measurements = measurements
+    },
+    removePlanById(state, planId) {
+      let plan = state.plans.find(plan => plan.id === planId)
+
+      state.plans.splice(state.plans.indexOf(plan), 1)
     }
   }
 }
