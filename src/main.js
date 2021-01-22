@@ -7,6 +7,7 @@ import Dsvg from './components/DSvg'
 import 'vue-select/dist/vue-select.css';
 import '@/assets/scss/tailwind.scss'
 const moment = require('moment')
+require("moment-duration-format");
 
 let forceHttps = () => {
   if (window.location.protocol !== 'https:') {

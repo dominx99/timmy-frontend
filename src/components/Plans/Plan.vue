@@ -91,7 +91,11 @@ export default {
       }
     },
     updatePassedTime() {
-      this.passedTime = this.time(this.calculateMeasurements())
+      console.log('time', this.calculateMeasurements())
+
+      this.passedTime = this.$moment
+        .duration(this.calculateMeasurements(), 'seconds')
+        .format("HH:mm:ss")
     },
     scheduleUpdatePassedTime() {
       this.passedTimeInterval = setInterval(this.updatePassedTime, 1000)
